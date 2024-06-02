@@ -17,12 +17,26 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core import serializers as serial
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.parsers import MultiPartParser, FormParser
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = models.ArticleClass.objects.all()
+    parser_classes = (MultiPartParser, FormParser,)
     serializer_class = serializers.ArticleSerializers
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['category__slug']
+
+
+class rawUserView(viewsets.ModelViewSet):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UsersSerilalizers
+
+
+class UserlistView(viewsets.ModelViewSet):
+    queryset = models.UserDetails.objects.all()
+    serializer_class = serializers.UserListSerializers
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['user__id']
 
 
 class UserRegistrationViewSet(APIView):
@@ -67,6 +81,7 @@ class UserLoginViewSet(APIView):
             username = serializer.validated_data['username']
             password = serializer.validated_data['password']
             user = authenticate(username=username, password=password)
+            
 
             if user:
                 token, _ = Token.objects.get_or_create(user=user)

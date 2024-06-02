@@ -45,6 +45,19 @@ class ArticleSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class UsersSerilalizers(serializers.ModelSerializer):
+    class Meta:
+        model = User 
+        fields = ['id', 'username', 'first_name', 'last_name', 'email']
+
+
+class UserListSerializers(serializers.ModelSerializer):
+    user = UsersSerilalizers()
+    class Meta:
+        model = models.UserDetails
+        fields = '__all__'
+
+
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True)

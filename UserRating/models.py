@@ -5,7 +5,7 @@ from Article.models import ArticleClass, STAR_CHOICES
 class UserRatingModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     news = models.ForeignKey(ArticleClass, on_delete=models.CASCADE)
-    rating = models.CharField(choices=STAR_CHOICES, max_length=10)
+    rating = models.IntegerField(default=0)
 
     def __str__(self) -> str:
         return self.news.headline

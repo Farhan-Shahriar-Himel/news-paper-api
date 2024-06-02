@@ -9,6 +9,7 @@ class UserDetails(models.Model):
     profession = models.CharField(max_length=100)
     age = models.IntegerField()
     institute = models.CharField(max_length=100)
+    editor = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return self.user.username
@@ -28,6 +29,7 @@ class ArticleClass(models.Model):
     category = models.ForeignKey(CategoryClass, on_delete=models.CASCADE)
     publishing_date = models.DateTimeField(auto_now_add=True)
     ratings = models.CharField(choices=STAR_CHOICES, max_length=10)
+    total_review = models.IntegerField(default=0)
     picture = models.ImageField(upload_to='Article/media/uploads', null=True, blank=True)
 
     def __str__(self) -> str:
