@@ -8,4 +8,4 @@ class UserRatingModel(models.Model):
     rating = models.IntegerField(default=0)
 
     def __str__(self) -> str:
-        return self.news.headline
+        return f"{self.news.headline}"
